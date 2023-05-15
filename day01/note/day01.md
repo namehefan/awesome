@@ -385,10 +385,12 @@ watch(count, (newval, oldval)=>{
 3. 配置VueCLI的配置文件：vue.config.js
 
    ```javascript
-   const {VantResolver} = require('unplugin-vue-components/resolvers');
+   const { defineConfig } = require('@vue/cli-service')
+   const { VantResolver } = require('unplugin-vue-components/resolvers');
    const ComponentsPlugin = require('unplugin-vue-components/webpack');
    
-   module.exports = {
+   module.exports = defineConfig({
+     transpileDependencies: true,
      configureWebpack: {
        plugins: [
          ComponentsPlugin({
@@ -396,7 +398,7 @@ watch(count, (newval, oldval)=>{
          }),
        ],
      },
-   };
+   })
    ```
 
 
