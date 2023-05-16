@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted} from 'vue';
+import { watch, ref, onMounted} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
 
@@ -72,8 +72,12 @@ const actions = [
 ]
 
 
-/** 控制顶部导航 */  
-const active = ref(0)  
+/** 控制顶部导航  监听顶部导航的变化，从而发送请求，加载新数据 */  
+const active = ref(0)
+watch(active, (newVal, oldVal)=>{
+  console.log(`导航从${oldVal}切换到了${newVal}`)
+})
+
 
 </script>
 

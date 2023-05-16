@@ -31,9 +31,16 @@
 
 <script setup lang="ts">
   import Movie from '@/types/Movie'
-  defineProps<{
+  import { onMounted } from 'vue';
+
+  const props = defineProps<{
     movie: Movie
   }>()
+
+  // 组件挂载完毕后，输出当前组件的电影名称
+  onMounted(()=>{  
+    console.log(props.movie.title)
+  })
 </script>
 
 <style scoped>
