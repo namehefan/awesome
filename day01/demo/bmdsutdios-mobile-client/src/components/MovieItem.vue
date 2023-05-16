@@ -5,19 +5,19 @@
       <div class="movie-item">
         <!-- 图片开始 -->
         <div class="movie-item-avatar">
-          <img src="@/assets/icon/cover.jpg" >
+          <img :src="movie.cover" >
         </div>
         <!-- 图片结束 -->
         <!-- 内容容器开始 -->
         <div class="movie-item-content-wrapper">
             <div class="content">
-                <div class="title">如果声音不记得</div>
-                <div class="line-ellipsis">剧情 / 爱情</div>
-                <div class="line-ellipsis">主演: 主演人</div>
+                <div class="title">{{ movie.title }}</div>
+                <div class="line-ellipsis">{{ movie.type }}</div>
+                <div class="line-ellipsis">主演: {{ movie.star_actor }}</div>
             </div>
             <!-- 评分开始 -->
             <div class="score-wrapper">
-              <div class="score">9.0</div>
+              <div class="score">{{ movie.score }}</div>
               <!-- <div>暂无评分</div> -->
             </div>
             <!-- 评分结束 -->
@@ -30,7 +30,10 @@
 </template>
 
 <script setup lang="ts">
-
+  import Movie from '@/types/Movie'
+  defineProps<{
+    movie: Movie
+  }>()
 </script>
 
 <style scoped>

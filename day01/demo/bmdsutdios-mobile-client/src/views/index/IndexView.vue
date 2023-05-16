@@ -38,6 +38,7 @@
 
     <!-- 电影列表 -->
     <movie-item 
+      :movie="item"
       v-for="item in movieList" :key="item.id">
     </movie-item>
   </div>
