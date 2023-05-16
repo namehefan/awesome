@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- 预留二级路由占位符的位置 -->
+    <router-view />
+
     <!-- 底部选项卡 -->
     <van-tabbar 
       v-model="active"
@@ -28,8 +31,8 @@
       </van-tabbar-item>
       <van-tabbar-item>
         我的
-        <template #icon>
-          <img src="@/assets/tabs/me_0.png" alt="">
+        <template #icon="props">
+          <img :src="`/tabs/me_${props.active?1:0}.png`" alt="">
         </template>
       </van-tabbar-item>
     </van-tabbar>
