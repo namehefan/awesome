@@ -119,6 +119,13 @@ public
 ### 实现IndexView.vue的静态页面的编写
 
 1. NavBar 标题栏。
+2. AppHeader广告栏。
+3. #top-nav 顶部导航栏。
+   1. 城市选择
+   2. 标签导航
+   3. 放大镜
+
+
 
 
 
