@@ -37,17 +37,27 @@
     </van-sticky>
 
     <!-- 电影列表 -->
-    <movie-item v-for="i in 10" :key="i">
+    <movie-item 
+      v-for="item in movieList" :key="item.id">
     </movie-item>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted} from 'vue';
+import httpApi from '@/http';
+import Movie from '@/types/Movie';
 
 /** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */
+const movieList = ref<Movie[]>()
 onMounted(()=>{
   console.log('Mounted1...') 
+  // 通过类别ID  (热映类别ID=1)  查询电影列表
+  const params = {cid:1, page:1, pagesize:20}
+  httpApi.movieApi.queryByCategory(params).then(res=>{
+    console.log('加载首页电影列表', res) 
+    movieList.value = res.data.data.result
+  })
 })
 
 
