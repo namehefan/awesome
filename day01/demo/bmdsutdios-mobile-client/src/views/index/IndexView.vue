@@ -19,35 +19,40 @@
     <!-- <AppHeader></AppHeader> -->
 
     <!-- 顶部导航栏 -->
-    <div class="top-nav">
-      <!-- 城市信息 -->
-      <div class="city">北京</div>
-      <span class="arrow"></span>
-      <!-- tabs导航 -->
-      <van-tabs class="tabs" v-model:active="active">
-        <van-tab title="热映"></van-tab>
-        <van-tab title="待映"></van-tab>
-        <van-tab title="经典"></van-tab>
-      </van-tabs>
-      <!-- 搜索按钮 -->
-      <van-icon name="search" color="#f03d37"
-        size="25" style="font-weight: bold;"/>
-    </div>
+    <van-sticky>
+      <div class="top-nav">
+        <!-- 城市信息 -->
+        <div class="city">北京</div>
+        <span class="arrow"></span>
+        <!-- tabs导航 -->
+        <van-tabs color="#f03d37" class="tabs" v-model:active="active">
+          <van-tab title="热映"></van-tab>
+          <van-tab title="待映"></van-tab>
+          <van-tab title="经典"></van-tab>
+        </van-tabs>
+        <!-- 搜索按钮 -->
+        <van-icon name="search" color="#f03d37"
+          size="25" style="font-weight: bold;"/>
+      </div>
+    </van-sticky>
 
-
-
-    <!--  -->
-    <van-empty description="首页模块 敬请期待" />
+    <!-- 电影列表 -->
+    <movie-item v-for="i in 10" :key="i">
+    </movie-item>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted} from 'vue';
+
+/** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */
+onMounted(()=>{
+  console.log('Mounted1...') 
+})
 
 
-// 控制右上角popover弹窗
+/** 控制右上角popover弹窗 */
 const showPopover = ref(false)
-
 const actions = [
   {text: '首页'},
   {text: '组件'},
@@ -56,7 +61,7 @@ const actions = [
 ]
 
 
-// 控制顶部导航
+/** 控制顶部导航 */  
 const active = ref(0)  
 
 </script>
@@ -66,6 +71,8 @@ const active = ref(0)
   display: flex;
   align-items: center;
   padding: 0px 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
 
   .arrow {
     border: 5px solid transparent;

@@ -2,6 +2,7 @@
   <div>
     <!-- 预留二级路由占位符的位置 -->
     <router-view />
+    <div style="height:60px;"></div>
 
     <!-- 底部选项卡 -->
     <van-tabbar 
