@@ -6,13 +6,32 @@
       active-color="#f03d37">
       <van-tabbar-item icon="home-o">
         首页
-        <template #icon>
-          <img src="@/assets/tabs/index_0.png" alt="">
+        <template #icon="props">
+          <img :src="require(`@/assets/tabs/index_${props.active?1:0}.png`)" alt="">
         </template>
       </van-tabbar-item>
-      <van-tabbar-item icon="search">视频</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">演出</van-tabbar-item>
-      <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
+      <van-tabbar-item>
+        视频
+        <template #icon="props">
+          <img :src="require(`@/assets/tabs/video_${props.active?1:0}.png`)" alt="">
+        </template>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        演出
+        <template #icon="props">
+          <!-- <img v-show="props.active" src="@/assets/tabs/show_1.png" alt="">
+          <img v-show="!props.active" src="@/assets/tabs/show_0.png" alt=""> -->
+        
+          <img v-if="props.active" src="@/assets/tabs/show_1.png" alt="">
+          <img v-else src="@/assets/tabs/show_0.png" alt="">
+        </template>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        我的
+        <template #icon>
+          <img src="@/assets/tabs/me_0.png" alt="">
+        </template>
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
