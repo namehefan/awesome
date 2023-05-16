@@ -3,6 +3,10 @@ import HomeView from '../views/HomeView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/',
+    redirect: '/home/index'  // 重定向到首页
+  },
+  {
     path: '/home',
     name: 'home',
     component: HomeView,

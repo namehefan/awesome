@@ -112,6 +112,13 @@ public
    http://localhost:8080/home/me
    ```
 
+5. 当点击底部选项卡时，改变路由地址，上半部分的内容。
+
+
+
+### 实现IndexView.vue的静态页面的编写
+
+1. NavBar 标题栏。
 
 
 

@@ -8,5 +8,11 @@
   margin: 0;
   padding: 0;
 }
+
+:root:root {
+  --van-nav-bar-background: #f03d37;
+  --van-nav-bar-title-text-color: #fff;
+  --van-nav-bar-icon-color: #fff;
+}
 </style>
 
