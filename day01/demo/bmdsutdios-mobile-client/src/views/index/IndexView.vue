@@ -25,10 +25,13 @@
         <div class="city">北京</div>
         <span class="arrow"></span>
         <!-- tabs导航 -->
-        <van-tabs color="#f03d37" class="tabs" v-model:active="active">
-          <van-tab title="热映"></van-tab>
-          <van-tab title="待映"></van-tab>
-          <van-tab title="经典"></van-tab>
+        <van-tabs 
+          color="#f03d37" 
+          class="tabs" 
+          v-model:active="active">
+          <van-tab title="热映" name="1"></van-tab>
+          <van-tab title="待映" name="2"></van-tab>
+          <van-tab title="经典" name="3"></van-tab>
         </van-tabs>
         <!-- 搜索按钮 -->
         <van-icon name="search" color="#f03d37"
@@ -73,11 +76,21 @@ const actions = [
 
 
 /** 控制顶部导航  监听顶部导航的变化，从而发送请求，加载新数据 */  
-const active = ref(0)
+const active = ref('1')
 watch(active, (newVal, oldVal)=>{
   console.log(`导航从${oldVal}切换到了${newVal}`)
+  // 发送请求，加载当前选中类别的ID
+  let params = {
+    cid: parseInt(active.value),
+    page: 1, 
+    pagesize: 20
+  }
+  httpApi.movieApi.queryByCategory(params).then(res=>{
+    console.log('切换导航的新数据：', res)
+    // 更新列表
+    movieList.value = res.data.data.result
+  })
 })
-
 
 </script>
 
