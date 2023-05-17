@@ -52,11 +52,38 @@ typora-copy-images-to: assets
 
 #### 实现列表的下拉刷新
 
+```html
+<!-- 电影列表 -->
+<van-pull-refresh 
+                  success-text="加载成功"
+                  v-model="refreshing" 
+                  @refresh="onRefresh">
+    <van-list
+              v-if="movieList"
+              v-model:loading="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="onLoad">
+        <movie-item 
+                    :movie="item"
+                    v-for="item in movieList" :key="item.id">
+        </movie-item>
+    </van-list>
+</van-pull-refresh>
+```
 
 
 
+#### 显示电影详情页
 
+**业务需求：** 当用户在首页点击其中某一个列表项时，跳转到详情页。并且携带选中项的电影ID一起跳转。到详情页后显示该电影的详情信息。
 
+**实现步骤：** 
+
+1. 准备好电影详情页静态页面。
+2. 配置路由，当访问： `/movie-detail/:id` 时，跳转到详情页。（传递选中的电影ID）
+3. 在详情页中接收参数id，带着该电影id，发送http请求，加载电影详情数据。
+4. 在页面中完成数据的显示。
 
 
 

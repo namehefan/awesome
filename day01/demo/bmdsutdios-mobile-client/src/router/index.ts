@@ -25,9 +25,9 @@ const routes: Array<RouteRecordRaw> = [
     }]
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue')
+    path: '/movie-detail/:id',
+    name: 'movie-detail',
+    component: () => import('../views/index/MovieDetail.vue')
   }
 ]
 

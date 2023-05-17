@@ -51,7 +51,8 @@
         finished-text="没有更多了"
         @load="onLoad">
         <movie-item 
-          :movie="item"
+          @click="router.push(`/movie-detail/${item.id}`)"  
+          :movie="item" 
           v-for="item in movieList" :key="item.id">
         </movie-item>
       </van-list>
@@ -64,6 +65,12 @@ import { watch, ref, onMounted} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
 import {set, get} from '@/utils/Storage';
+import { useRoute, useRouter } from 'vue-router';
+
+// 在vue3中使用vueRouter对象
+const router = useRouter()
+// let route = useRoute()
+
 
 /** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */
 const movieList = ref<Movie[]>()
