@@ -59,7 +59,7 @@
 import { watch, ref, onMounted} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
-import { file } from '@babel/types';
+import {set, get} from '@/utils/Storage';
 
 /** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */
 const movieList = ref<Movie[]>()
@@ -91,8 +91,14 @@ watch(active, (newVal, oldVal)=>{
   // 将滚动条滚到顶部, 重新重置finished变量
   window.scrollTo(0, 0)
   finished.value = false
+  // 先去缓存中找找 以前有没有存过
+  let cachedList = get(active.value)
+  if(cachedList){
+    movieList.value = cachedList // 更新列表
+    return;
+  }
 
-  // 发送请求，加载当前选中类别的ID
+  // 没有存过，就发送请求，加载当前选中类别的ID
   let params = {
     cid: parseInt(active.value),
     page: 1, 
@@ -102,6 +108,8 @@ watch(active, (newVal, oldVal)=>{
     console.log('切换导航的新数据：', res)
     // 更新列表
     movieList.value = res.data.data.result
+    // 将数组中的数据存入缓存
+    set(active.value, res.data.data.result)
   })
 })
 
