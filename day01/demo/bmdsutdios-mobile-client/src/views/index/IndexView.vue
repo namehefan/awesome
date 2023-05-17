@@ -40,18 +40,22 @@
     </van-sticky>
 
     <!-- 电影列表 -->
-    <van-list
-      v-if="movieList"
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad">
-      <movie-item 
-        :movie="item"
-        v-for="item in movieList" :key="item.id">
-      </movie-item>
-    </van-list>
-
+    <van-pull-refresh 
+      success-text="加载成功"
+      v-model="refreshing" 
+      @refresh="onRefresh">
+      <van-list
+        v-if="movieList"
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad">
+        <movie-item 
+          :movie="item"
+          v-for="item in movieList" :key="item.id">
+        </movie-item>
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -138,13 +142,26 @@ function onLoad(){
   })
 }
 
-// 当前列表的长度     下一页的页码
-// 20                 2
-// 40                 3
-// 60                 4
-// 100                6
-// movieList.length   (movieList.length/20)+1
+/** 处理下拉刷新业务 */
+const refreshing = ref(false)
 
+// 用户做了下拉刷新操作后，执行该方法，并且自动设置refreshing=true
+function onRefresh(){
+  console.log('下拉刷新...')
+  // 发送请求，加载当前类别下的首页数据，更新缓存，替换当前电影列表
+  let params = {
+    cid: parseInt(active.value),
+    page: 1,
+    pagesize: 20
+  }
+  httpApi.movieApi.queryByCategory(params).then(res=>{
+    movieList.value = res.data.data.result
+    refreshing.value = false
+    finished.value = false
+    // 更新缓存
+    set(active.value, res.data.data.result)
+  })
+}
 
 
 </script>
