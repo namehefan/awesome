@@ -9,7 +9,10 @@ interface Movie {
   showingon: string,
   star_actor: string,
   title: string,
-  type: string
+  type: string,
+  actor: string,
+  director: string,
+  thumb: string
 }
 
 export default Movie;
