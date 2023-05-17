@@ -63,38 +63,13 @@
         <div class="title">视频和剧照</div>
         <div class="photos-list">
             <!-- 遍历剧照列表 -->
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
-            </div>
-            <div class="photos-item">
-                <img src="@/assets/icon/thumb.jpg">
+            <div 
+              v-for="item in thumbList" :key="item"
+              class="photos-item">
+                <van-image 
+                  @click="previewImage"
+                  width="100%" height="100%"
+                  fit="cover" :src="item" />
             </div>
         </div>
         </div>
@@ -115,21 +90,35 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Movie from '@/types/Movie';
+import Actor from '@/types/Actor';
+import { showImagePreview } from 'vant';
+import 'vant/es/image-preview/style';
 
 const route = useRoute()
+
+
+/** 点击剧照图片，大图预览剧照 */
+function previewImage(i:number){
+  let urls = thumbList.value as string[]
+  let newUrls:string[] = []  
+  urls.forEach(item => {
+    // item: 路径  http://p0.meituan.net/erwer.jpg@106w_106h_xxx
+    newUrls.push(item.split('@')[0])
+  })
+  showImagePreview({
+    images: newUrls,
+    startPosition: i 
+  })
+}
 
 /** 处理简介的展开与收起 */
 const isOpen = ref(false)
 
-interface Actor{
-  avatar: string,
-  name: string,
-  id: number
-}
 
 /** 获取路径参数id，加载电影详情信息 */
 const movie = ref<Movie>()
 const actorList = ref<Actor[]>()
+const thumbList = ref<Array<string>>()
 const id = route.params.id    //   /movie-detail/251
 onMounted(function(){
   httpApi.movieApi.queryById({id}).then(res=>{
@@ -140,6 +129,10 @@ onMounted(function(){
     // actors:  [{avatar:'路径', name:'姓名'},{},{}]
     let actors = movie.value?.actor as string
     actorList.value = JSON.parse(actors)
+    // 处理剧照数组  (字符串数组)
+    let movies = movie.value?.thumb as string
+    thumbList.value = JSON.parse(movies)
+    console.log(thumbList.value)
   })
 })
 
