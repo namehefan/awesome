@@ -50,65 +50,10 @@
             <div class="title">演职人员</div>
             <div class="actors-list">
                 <!-- 遍历演员表 -->
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
-                </div>    
-                <div class="actors-item" >
-                    <img src="@/assets/icon/actor.jpg">
-                    <text>演员名称</text>
+                <div class="actors-item" 
+                  v-for="item in actorList" :key="item.id">
+                    <img :src="item.avatar">
+                    <text>{{ item.name }}</text>
                 </div>    
             </div>
         </div>
@@ -178,7 +123,8 @@ const isOpen = ref(false)
 
 interface Actor{
   avatar: string,
-  name: string
+  name: string,
+  id: number
 }
 
 /** 获取路径参数id，加载电影详情信息 */
