@@ -18,9 +18,11 @@ typora-copy-images-to: assets
 
 ### 实现列表的触底加载下一页
 
+**实现步骤：**
 
-
-
+1. 添加组件：van-list。
+2. 补充相关变量和方法： loading   finished    onLoad()
+3. 在onLoad中处理触底业务流
 
 
 

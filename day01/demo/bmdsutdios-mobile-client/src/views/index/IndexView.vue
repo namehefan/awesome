@@ -41,6 +41,7 @@
 
     <!-- 电影列表 -->
     <van-list
+      v-if="movieList"
       v-model:loading="loading"
       :finished="finished"
       finished-text="没有更多了"
@@ -58,6 +59,7 @@
 import { watch, ref, onMounted} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
+import { file } from '@babel/types';
 
 /** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */
 const movieList = ref<Movie[]>()
@@ -86,6 +88,10 @@ const actions = [
 const active = ref('1')
 watch(active, (newVal, oldVal)=>{
   console.log(`导航从${oldVal}切换到了${newVal}`)
+  // 将滚动条滚到顶部, 重新重置finished变量
+  window.scrollTo(0, 0)
+  finished.value = false
+
   // 发送请求，加载当前选中类别的ID
   let params = {
     cid: parseInt(active.value),
@@ -104,8 +110,33 @@ const loading = ref(false)
 const finished = ref(false)
 function onLoad(){
   console.log('到底了！')
-  loading.value = false
+  if(!movieList.value){  // movieList为undefined
+    return;
+  }
+  // 发送请求，加载当前列表下的下一页数据 
+  let params = {
+    cid: parseInt(active.value),
+    page: movieList.value.length/20 + 1,
+    pagesize: 20
+  }
+  httpApi.movieApi.queryByCategory(params).then(res=>{
+    // 将得到的结果数据，追加到当前列表的末尾
+    movieList.value?.push(...res.data.data.result)
+    loading.value = false
+    // 判断是否到底了
+    if(movieList.value?.length == res.data.data.total){
+      finished.value = true
+    }
+  })
 }
+
+// 当前列表的长度     下一页的页码
+// 20                 2
+// 40                 3
+// 60                 4
+// 100                6
+// movieList.length   (movieList.length/20)+1
+
 
 
 </script>
