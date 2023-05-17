@@ -40,10 +40,17 @@
     </van-sticky>
 
     <!-- 电影列表 -->
-    <movie-item 
-      :movie="item"
-      v-for="item in movieList" :key="item.id">
-    </movie-item>
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad">
+      <movie-item 
+        :movie="item"
+        v-for="item in movieList" :key="item.id">
+      </movie-item>
+    </van-list>
+
   </div>
 </template>
 
@@ -91,6 +98,15 @@ watch(active, (newVal, oldVal)=>{
     movieList.value = res.data.data.result
   })
 })
+
+/** 处理触底加载下一页相关业务 */
+const loading = ref(false)
+const finished = ref(false)
+function onLoad(){
+  console.log('到底了！')
+  loading.value = false
+}
+
 
 </script>
 
