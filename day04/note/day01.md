@@ -81,6 +81,20 @@ vue为保活的组件又提供了两个新的生命周期方法：
    ```
 
 
+### 使用momentjs构造连续7天的moment对象数组
+
+1. 安装moment
+
+   ```shell
+   npm i moment
+   ```
+
+2. 引入moment，创建moment，构造数组。
+
+   ```javascript
+   import moment from 'moment'
+   moment()
+   ```
 
 
 

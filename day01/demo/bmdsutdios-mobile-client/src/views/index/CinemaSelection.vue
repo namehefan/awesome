@@ -7,7 +7,7 @@
       <app-header></app-header>
 
       <!-- 电影详细描述 -->
-      <movie-desc></movie-desc>
+      <movie-desc v-if="movie" :movie="movie"></movie-desc>
 
       <!-- 顶部时间导航条 -->
       <van-sticky>
@@ -42,9 +42,29 @@
 </template>
 
 <script setup lang="ts">
+import httpApi from '@/http';
 import {ref} from 'vue'
+import { useRoute } from 'vue-router';
+import Movie from '@/types/Movie';
+import moment from 'moment';
+const route = useRoute()
+const id = route.params.id
 
+
+/** 时间导航 */
 const activeDate = ref('2022-10-06')
+// 通过momentjs，构造连续7天的moment对象
+console.log(moment())
+console.log(moment().add(1, 'days'))
+
+
+/** 处理电影详情组件内容的显示 */
+const movie = ref<Movie>()
+httpApi.movieApi.queryById({id}).then(res=>{
+  movie.value = res.data.data
+  console.log('电影详情数据', movie.value) 
+})
+
 
 </script>
 
