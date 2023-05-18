@@ -64,10 +64,10 @@
         <div class="photos-list">
             <!-- 遍历剧照列表 -->
             <div 
-              v-for="item in thumbList" :key="item"
+              v-for="item, i in thumbList" :key="item"
               class="photos-item">
                 <van-image 
-                  @click="previewImage"
+                  @click="previewImage(i)"
                   width="100%" height="100%"
                   fit="cover" :src="item" />
             </div>
@@ -132,7 +132,7 @@ onMounted(function(){
     // 处理剧照数组  (字符串数组)
     let movies = movie.value?.thumb as string
     thumbList.value = JSON.parse(movies)
-    console.log(thumbList.value)
+    // console.log(thumbList.value)
   })
 })
 

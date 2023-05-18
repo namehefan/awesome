@@ -33,7 +33,7 @@
   import Movie from '@/types/Movie'
   import { onMounted } from 'vue';
 
-  const props = defineProps<{
+  defineProps<{
     movie: Movie
   }>()
 

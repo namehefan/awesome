@@ -65,7 +65,7 @@ import { watch, ref, onMounted} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
 import {set, get} from '@/utils/Storage';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 // 在vue3中使用vueRouter对象
 const router = useRouter()

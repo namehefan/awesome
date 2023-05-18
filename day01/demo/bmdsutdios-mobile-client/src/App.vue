@@ -1,6 +1,11 @@
 <template>
   <!-- 一级路由占位符 -->
-  <router-view />
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
+
 </template>
 
 <style lang="scss">
