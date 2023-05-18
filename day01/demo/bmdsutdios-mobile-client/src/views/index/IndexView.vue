@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted} from 'vue';
+import { watch, ref, onMounted, onActivated, onDeactivated} from 'vue';
 import httpApi from '@/http';
 import Movie from '@/types/Movie';
 import {set, get} from '@/utils/Storage';
@@ -70,6 +70,13 @@ import { useRouter } from 'vue-router';
 // 在vue3中使用vueRouter对象
 const router = useRouter()
 // let route = useRoute()
+
+onActivated(function(){
+  console.log('index被激活')
+})
+onDeactivated(function(){
+  console.log('index失活')
+})
 
 
 /** 页面初始化时，加载热映类别(cid=1)的首页电影列表数据 */

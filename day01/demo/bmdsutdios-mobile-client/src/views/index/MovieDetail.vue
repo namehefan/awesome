@@ -78,7 +78,11 @@
         <div style="height: 50px"></div>
         <!-- 提示若热映类别则显示购票，若待映类别则显示暂未上映，若经典类别则什么都不显示 -->
         <div class="buyblock">
-          <van-button round type="danger" block>特惠购票</van-button>
+          <van-button 
+            @click="router.push(`/cinema-selection/${route.params.id}`)"
+            round type="danger" block>
+            特惠购票
+          </van-button>
           <!-- <van-button round type="danger" disabled block>暂未上映</van-button> -->
         </div>
     </div>
@@ -88,12 +92,13 @@
 import httpApi from '@/http';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Movie from '@/types/Movie';
 import Actor from '@/types/Actor';
 import { showImagePreview } from 'vant';
 import 'vant/es/image-preview/style';
 
+const router = useRouter()
 const route = useRoute()
 
 

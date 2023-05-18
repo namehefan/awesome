@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    MovieDesc: typeof import('./src/components/MovieDesc.vue')['default']
     MovieItem: typeof import('./src/components/MovieItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

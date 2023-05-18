@@ -18,6 +18,79 @@ typora-copy-images-to: assets
 
 需要告诉vue，A组件属于保活组件，当不需要看到A组件时（例如跳转到了B组件），保活机制将不会销毁A组件，而是将它保留在内存中，如果后续有需求重新显示A组件，则直接获取A组件并显示即可。
 
+结合router-view实现路由组件的缓存：
+
+```html
+<router-view v-slot="{ Component }">
+    <keep-alive>
+        <component :is="Component" />
+    </keep-alive>
+</router-view>
+```
+
+如果这么做，导致所有的路由组件都会被缓存。实际上有些路由组件不希望被缓存。所以需要做一些特殊配置来实现定制化的组件缓存需求（有的缓存，有的不缓存）。
+
+```javascript
+{
+    path: 'index',
+    component: Index组件对象,
+    meta: {
+    	keepAlive: true        
+    }
+}
+```
+
+```html
+<router-view v-slot="{ Component }">
+    <keep-alive>
+        <component v-if="route.meta.keepAlive" :is="Component" />
+    </keep-alive>
+    <component v-if="!route.meta.keepAlive" :is="Component" />
+</router-view>
+```
+
+注意：
+
+一旦组件被保活处理，当替换到当前组件时，当前组件不会执行unmounted生命周期，会直接缓存在内存中。
+
+若重新启动这个组件，也不会执行该组件的mounted生命周期，而是直接显示该组件。
+
+vue为保活的组件又提供了两个新的生命周期方法：
+
+1. activated       被 keep-alive 缓存的组件激活时调用。
+2. deactivated   被 keep-alive 缓存的组件失活时调用。
+
+
+
+### 点击特惠购票，选择电影院
+
+看到电影详情，点击特惠购票，跳转到选择影院页面。
+
+**实现步骤：**
+
+1. 准备好选择影院页面：CinemaSelection.vue，MovieDesc.vue。
+
+2. 配置路由：/cinema-selection/:id 时，跳转到该选择影院页面。
+
+3. 当点击特惠购票按钮时，添加路由跳转相关的代码即可。
+
+   ```html
+   <van-button @click="router.push(`/cinema-selection/${route.params.id}`)" round type="danger" block>
+       特惠购票
+   </van-button>
+   ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
