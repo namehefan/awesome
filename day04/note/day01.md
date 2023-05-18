@@ -96,8 +96,26 @@ vue为保活的组件又提供了两个新的生命周期方法：
    moment()
    ```
 
+3. 将moment对对象，转成 **周一   4月28日**格式：
+
+   ```javascript
+   enum Week {'日', '一', '二', '三', '四', '五', '六'}
+   /** 接收一个moment对象，转成 '周x x月x日' 字符串 */
+   function momentToStr(item:moment.Moment){
+     let i = parseInt(item.format('e'))
+     let s = Week[i]  // 枚举反查 名字
+     return item.format(`周${s} MM月DD日`)
+   }
+   ```
 
 
+#### 选择导航中的某一个时间，加载影院列表
+
+**实现步骤：**
+
+1. 通过watch监听activeDate的变化。
+2. 监听到变化后，获取时间字符串，拿到当前电影ID，发送请求，加载有排期的影院列表。
+3. 更新页面即可。
 
 
 

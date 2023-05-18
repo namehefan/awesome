@@ -12,12 +12,11 @@
       <!-- 顶部时间导航条 -->
       <van-sticky>
         <van-tabs v-model:active="activeDate" swipe-threshold="1" line-width="80px">
-          <van-tab name="2022-10-06" title="周一 10月06日"></van-tab>
-          <van-tab name="2022-10-07" title="周二 10月07日"></van-tab>
-          <van-tab name="2022-10-08" title="周三 10月08日"></van-tab>
-          <van-tab name="2022-10-08" title="周三 10月08日"></van-tab>
-          <van-tab name="2022-10-08" title="周三 10月08日"></van-tab>
-          <van-tab name="2022-10-08" title="周三 10月08日"></van-tab>
+          <van-tab 
+            v-for="item, i in dates" :key="i"
+            :name="item.format('yyyy-MM-DD')" 
+            :title="momentToStr(item)">
+          </van-tab>
         </van-tabs>
       </van-sticky>
 
@@ -43,20 +42,41 @@
 
 <script setup lang="ts">
 import httpApi from '@/http';
-import {ref} from 'vue'
 import { useRoute } from 'vue-router';
 import Movie from '@/types/Movie';
 import moment from 'moment';
+import { ref, watch } from 'vue';
 const route = useRoute()
-const id = route.params.id
+const id = route.params.id as string
 
 
 /** 时间导航 */
 const activeDate = ref('2022-10-06')
-// 通过momentjs，构造连续7天的moment对象
-console.log(moment())
-console.log(moment().add(1, 'days'))
+watch(activeDate, (newVal, oldVal)=>{
+  console.log(`导航从 ${oldVal} 变成了 ${newVal} `)
+  let params = {
+    movie_id: parseInt(id),
+    showingon_date: newVal
+  }
+  httpApi.cinemaApi.queryByMovieAndDate(params).then(res=>{
+    console.log('电影院列表结果', res)
+  })
+})
 
+// 通过momentjs，构造连续7天的moment对象
+const dates:moment.Moment[] = []
+for(let i=0; i<7; i++){
+  dates.push(moment().add(i, 'days'))
+}
+console.log(dates)
+
+enum Week {'日', '一', '二', '三', '四', '五', '六'}
+/** 接收一个moment对象，转成 '周x x月x日' 字符串 */
+function momentToStr(item:moment.Moment){
+  let i = parseInt(item.format('e'))
+  let s = Week[i]  // 枚举反查 名字
+  return item.format(`周${s} MM月DD日`)
+}
 
 /** 处理电影详情组件内容的显示 */
 const movie = ref<Movie>()
